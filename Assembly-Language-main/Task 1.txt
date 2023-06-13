@@ -1,0 +1,40 @@
+.model small
+.data
+str db 'Enter value$'
+str2 db 0dh,0ah,'Entered value is Even$'
+str3 db 0dh,0ah,'Entered value is Odd$'
+nbr1 db ?
+
+.code
+mov ax,@data
+mov ds,ax
+
+lea dx,str
+mov ah,09
+int 21h
+
+mov ah,01
+int 21h
+mov nbr1,al
+mov bl,02
+
+div bl
+
+cmp ah,0
+JNE ODD
+EVEN:
+lea dx,str2
+mov ah,09
+int 21h
+jmp done
+
+ODD:
+lea dx,str3
+mov ah,09
+int 21h
+
+
+done:
+mov ah,4ch
+int 21h
+ret

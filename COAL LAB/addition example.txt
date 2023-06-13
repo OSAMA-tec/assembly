@@ -1,0 +1,20 @@
+.data
+
+.code
+
+;save values in registers  
+mov al,2
+mov bl,4
+
+;adding
+add al,bl ; al=al+bl   
+
+;save sum in dl
+mov dl,al 
+
+;add 30h to convert result in ascii
+add dl,48
+
+;print result
+mov ah,2
+int 21h

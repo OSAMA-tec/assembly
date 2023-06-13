@@ -1,0 +1,64 @@
+.model small
+.data
+
+str db 0ah,0dh, "Enter  values (Press Enter key to STOP): $"
+str2 db 0ah,0dh,'The reverse order is : $'
+arr db ?
+size db ?
+
+.code
+
+ mov ax,@data
+ mov ds,ax
+
+ lea dx,str
+ mov ah,09 ;Display str
+ int 21h
+ 
+ mov bl,0
+
+ ;input
+ mov si,0
+
+ l1:
+ mov ah,02
+ mov dl,0ah
+ int 21h
+ 
+ mov dl,0dh
+ int 21h
+ 
+ mov ah,1
+ int 21h   
+ 
+ cmp al,13
+ je done
+ 
+ mov [arr+si],al
+ sub [arr+si],48
+ inc si
+ inc bl
+ jmp l1
+
+ done:
+ 
+ mov cl,bl
+ 
+ lea dx,str2
+ mov ah,09
+ int 21h
+ 
+ 
+l2:
+
+ dec si
+
+ mov dl,[arr+si]
+ add dl,48
+ mov ah,02
+ int 21h
+ 
+ loop l2
+
+mov ah,4ch
+int 21h

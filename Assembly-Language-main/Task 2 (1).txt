@@ -1,0 +1,121 @@
+.model small
+.data
+str db 'Enter value$'
+str2 db 0dh,0ah,'A$'
+str3 db 0dh,0ah,'B$' 
+str4 db 0dh,0ah,'C$'
+str5 db 0dh,0ah,'D$'
+str6 db 0dh,0ah,'F$'
+str7 db 0dh,0ah,'Not Valid$'
+nbr1 db ?
+
+.code
+mov ax,@data
+mov ds,ax
+
+lea dx,str
+mov ah,09
+int 21h
+
+
+mov dl, 10  
+mov bl, 0         
+
+scanNum:
+
+      mov ah, 01h
+      int 21h
+
+      cmp al, 13   ; Check if user pressed ENTER KEY
+      je  exit 
+
+      mov ah, 0  
+      sub al, 48   ; ASCII to DECIMAL
+
+      mov cl, al
+      mov al, bl   ; Store the previous value in AL
+
+      mul dl       ; multiply the previous value with 10
+
+      add al, cl   ; previous value + new value ( after previous value is multiplyed with 10 )
+      mov bl, al
+
+      jmp scanNum    
+
+exit:
+
+mov nbr1,bl
+mov cl,100
+cmp bl,cl
+jle l1
+jmp l6
+
+l1:
+mov cl,90
+cmp bl,cl
+jg A
+jmp l2
+
+A:
+lea dx,str2
+mov ah,09
+int 21h
+jmp done
+
+l2:
+mov cl,80
+cmp bl,cl
+JG B
+jmp l3
+
+B:
+lea dx,str3
+mov ah,09
+int 21h
+jmp done
+
+l3:
+mov cl,70
+cmp bl,cl
+JG C
+jmp l4
+
+C:
+lea dx,str4
+mov ah,09
+int 21h
+jmp done
+
+l4:
+mov cl,60
+cmp bl,cl
+JG D
+jmp l5
+
+D:
+lea dx,str5
+mov ah,09
+int 21h
+jmp done 
+
+l5:
+mov cl,0
+cmp bl,cl
+JGE Fail
+jmp l6
+
+Fail:
+lea dx,str6
+mov ah,09
+int 21h
+jmp done
+
+l6:
+lea dx,str7
+mov ah,09
+int 21h
+
+done:
+mov ah,4ch
+int 21h
+ret

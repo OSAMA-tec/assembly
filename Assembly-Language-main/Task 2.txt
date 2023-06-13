@@ -1,0 +1,116 @@
+.model small
+.data
+ 
+str db 0ah,0dh, "Enter 10 values : $"
+str2 db 0dh,0ah,'The Maximum count is of Even $'
+str3 db 0dh,0ah,'The Maximum count is of Odd $'
+str4 db 0dh,0ah,'Count Even: $'
+str5 db 0dh,0ah,'Count Odd: $'
+str6 db 0dh,0ah,'Equal Count $'
+arr db ?
+counteven db 0
+countodd db 0
+
+.code
+
+ mov ax,@data
+ mov ds,ax
+
+ lea dx,str
+ mov ah,09 ;Display str
+ int 21h
+
+
+ ;input
+ mov si,0
+ mov cx,10
+
+ l1:
+
+ mov ah,01
+ int 21h
+
+ mov [arr+si],al
+ sub [arr+si],48
+ inc si
+
+ loop l1
+
+ ;Find even
+ mov ah,0
+ mov si,0
+ mov cx,10
+ mov bl,2
+
+
+ check:
+ mov al,[arr+si]
+ div bl
+
+ cmp ah,0
+ jnz odd
+ inc dh
+ jmp next
+
+odd:
+ inc dl
+
+next:
+
+ inc si
+ loop check
+
+ mov counteven,dh
+ mov countodd,dl
+
+ lea dx,str4
+ mov ah,09 ;Display str4
+ int 21h
+
+ mov bl,counteven
+ mov dl,bl
+ add dl,48
+ mov ah,02
+ int 21h
+
+ lea dx,str5
+ mov ah,09 ;Display str5
+ int 21h
+
+ mov bh,countodd
+ mov dl,bh
+ add dl,48
+ mov ah,02
+ int 21h
+
+ cmp bl,bh
+ jg MaxEven
+ jmp MaxOdd
+
+MaxEven:
+
+ lea dx,str2
+ mov ah,09 ;Display str2
+ int 21h
+
+ jmp done
+
+MaxOdd:
+ 
+ cmp bl,bh
+ JE eqcount
+ 
+ lea dx,str3
+ mov ah,09 ;Display str3
+ int 21h
+ jmp done
+
+eqcount:
+ lea dx,str6
+ mov ah,09 ;Display str6
+ int 21h
+ 
+done:
+
+ mov ah,4ch
+ int 21h

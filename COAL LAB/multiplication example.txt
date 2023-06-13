@@ -1,0 +1,20 @@
+.data
+
+.code
+
+;save values in registers
+mov al,4
+mov bh,2
+
+;multiplying
+mul bh ; al=al*bh   
+
+;save product in dl
+mov dl,al 
+
+;add 30h to convert result in ascii
+add dl,30h
+
+;print result
+mov ah,2
+int 21h

@@ -1,0 +1,109 @@
+.model small
+.data
+
+str db 0ah,0dh, "Enter 10 values : $"
+str2 db 0ah,0dh,'Maximum : $'
+str3 db 0ah,0dh,'Minimum : $'
+arr db ?
+max db ?
+min db ?
+
+.code
+
+ mov ax,@data
+ mov ds,ax
+
+ lea dx,str
+ mov ah,09 ;Display str
+ int 21h
+
+
+ ;input
+ mov si,0
+ mov cx,10
+
+ l1:
+
+ mov ah,01
+ int 21h
+
+ mov [arr+si],al
+ sub [arr+si],48
+ inc si
+
+ loop l1
+
+ ;calculate Max
+ mov al,[arr+0]
+ mov max,al
+ mov si,0
+ mov cx,10
+
+
+ 
+ loopMax:
+
+ cmp [arr+si],al
+ jg change
+ jmp nochange
+
+change:
+
+ mov al,[arr+si]
+ mov max,al
+
+nochange:
+
+ inc si
+ loop loopMax
+
+ ;calculate min
+ mov al,[arr+0]
+ mov min,0
+ mov si,0
+ mov cx,10
+
+ loopMin:
+ cmp [arr+si],al
+ jl changeMin
+ jmp nochangeMin
+
+
+changeMin:
+
+ mov al,[arr+si]
+ mov min,al
+
+nochangeMin:
+
+ inc si
+ loop loopMin
+
+
+ ;Display MAX message
+ lea dx,str2
+ mov ah,09
+ int 21h
+
+ ;Display Maximum
+ mov bl,max
+ mov dl,bl
+ add dl,48
+ mov ah,02
+ int 21h          
+ 
+ ;Display Min message
+ lea dx,str3
+ mov ah,09
+ int 21h
+
+ ;Display Miniimum
+ mov bl,min
+ mov dl,bl
+ add dl,48
+ mov ah,02
+ int 21h
+
+
+ mov ah,4ch
+ int 21h
