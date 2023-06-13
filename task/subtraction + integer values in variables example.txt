@@ -1,0 +1,22 @@
+.data
+var1 db 9
+var2 db 5
+
+.code
+
+;save values in registers  
+mov al,var1
+mov bl,var2
+
+;subtract
+sub al,bl ; al=al-bl   
+
+;save difference in dl
+mov dl,al 
+
+;add 30h to convert result in ascii
+add dl,48
+
+;print result
+mov ah,2
+int 21h

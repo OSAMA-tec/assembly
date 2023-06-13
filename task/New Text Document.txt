@@ -1,0 +1,132 @@
+
+.data  
+
+msg1 db "2*1=","$"
+msg2 db "2*2=","$"
+msg3 db "2*3=","$"
+msg4 db "2*4=","$"
+
+.code
+     
+main: 
+
+;print strings
+mov ax,@data
+mov ds,ax
+
+mov ah,9
+mov dx, offset msg1
+int 21h 
+
+;save values in registers
+mov al,2
+mov bh,1
+
+;multiplying
+mul bh ; al=al*bh   
+
+;save product in dl
+mov dl,al 
+
+;add 30h to convert result in ascii
+add dl,30h
+
+;print result
+mov ah,2
+int 21h 
+
+;printing next line
+mov ah,2
+mov dl,10
+int 21h
+
+;printing carriage return
+mov ah,2
+mov dl,13
+int 21h
+        
+        
+mov ah,9
+mov dx, offset msg2
+int 21h
+;save values in registers
+mov al,2
+mov bh,2
+
+;multiplying
+mul bh ; al=al*bh   
+
+;save product in dl
+mov dl,al 
+
+;add 30h to convert result in ascii
+add dl,30h
+
+;print result
+mov ah,2
+int 21h 
+
+;printing next line
+mov ah,2
+mov dl,10
+int 21h
+
+;printing carriage return
+mov ah,2
+mov dl,13
+int 21h
+ 
+
+mov ah,9
+mov dx, offset msg3
+int 21h
+
+;save values in registers
+mov al,2
+mov bh,3
+
+;multiplying
+mul bh ; al=al*bh   
+
+;save product in dl
+mov dl,al 
+
+;add 30h to convert result in ascii
+add dl,30h
+
+;print result
+mov ah,2
+int 21h 
+ 
+;printing next line
+mov ah,2
+mov dl,10
+int 21h
+
+;printing carriage return
+mov ah,2
+mov dl,13
+int 21h
+
+          
+mov ah,9
+mov dx, offset msg4
+int 21h          
+;save values in registers
+mov al,2
+mov bh,4
+
+;multiplying
+mul bh ; al=al*bh   
+
+;save product in dl
+mov dl,al 
+
+;add 30h to convert result in ascii
+add dl,30h
+
+;print result
+mov ah,2
+int 21h 
+
+end main

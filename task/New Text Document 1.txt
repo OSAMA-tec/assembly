@@ -1,0 +1,56 @@
+.model small 
+
+
+.data 
+A db 2
+B db ?
+
+str db "This in a even number" 
+str1 db "This in a Odd number"
+
+.code 
+
+ mov ax,@data 
+ mov ds,ax
+ 
+ ;finding remender 
+ mov al,A
+ 
+ mov bh,2
+ 
+ div bh
+ 
+ add al,30h
+ mov dl,al
+ 
+ mov ah,02
+ int 21h
+ 
+ mov B,ah
+
+ 
+;doing comparision 
+ 
+ mov bh,A
+ mov ah,B
+ 
+ 
+ 
+ CMP bh,ah
+ JG l1 ;if Your number is even
+ jmp l2 ;is Your number is odd
+ 
+ 
+ l1:
+ lea dx,str
+ mov ah,9
+ int 21h
+ 
+ 
+ 
+ l2:
+ lea dx,str1
+ mov ah,9
+ int 21h
+ e:
+ 

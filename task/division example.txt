@@ -1,0 +1,47 @@
+.data 
+remainder db ?
+
+.code 
+
+mov ax,@data
+
+;save values in registers  
+mov al,9
+mov bh,2
+
+
+;divide
+div bh ; al=al/bl   
+
+;save quotient in dl
+mov dl,al
+
+;save remainder in variable
+mov remainder,ah  
+
+;add 30h or 48 to convert result in ascii
+add dl,48  ;OR add dl,30h
+
+;print result (quotient)
+mov ah,2
+int 21h
+
+;printing next line
+mov ah,2
+mov dl,10
+int 21h
+
+;printing carriage return
+mov ah,2
+mov dl,13
+int 21h
+
+;display remainder
+mov dl,remainder
+
+;add 30h or 48 to convert result in ascii
+add dl,48  ;OR add dl,30h 
+
+;print remainder
+mov ah,2
+int 21h
